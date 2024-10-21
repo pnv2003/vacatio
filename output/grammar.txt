@@ -1,0 +1,21 @@
+S -> SUBJ PRED | PRED
+SUBJ -> NP
+PRED -> VP | ADJP
+NP -> NP_ DEMON
+NP_ -> PRO | N | NUM N | QUANT N | N PP
+VP -> VP_ | VP_ ADV_VTAIL
+VP_ -> V | V NP | ADV_VHEAD V
+ADJP -> ADJ | ADV_AHEAD ADJ | ADJ ADV_ATAIL
+PP -> P | P NP
+PRO -> tôi | bạn | anh | chị | em | họ | ai
+N -> phòng | xe | máy bay | nhà hàng | khách sạn | bãi biển | tiền | vé | dịch vụ | lịch trình | đồ ăn | thức uống | ẩm thực | thời tiết | địa điểm | thời gian | ngày | giờ
+V -> đặt | mua | thuê | đi | tìm | thanh toán | trả | nhận
+ADJ -> đẹp | xấu | tốt | rẻ | đắt | nhanh | chậm | lạnh | nóng | tươi | ngon | khô | đầy | trống | đông | ít | nhiều
+ADV_AHEAD -> rất | quá | vô cùng | hết sức
+ADV_ATAIL -> lắm | quá | vãi | cực kỳ
+ADV_VHEAD -> đã | đang | sẽ | vẫn | có thể | nên | không | chưa | đã từng
+ADV_VTAIL -> rồi
+NUM -> một | hai | ba | bốn | năm | sáu | bảy | tám | chín
+QUANT -> một ít | nhiều | vài | một số | tất cả | những | mấy | các
+P -> ở | tại | trong | trên | dưới
+DEMON -> này | đó | kia | ấy | đây

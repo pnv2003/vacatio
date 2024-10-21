@@ -1,0 +1,213 @@
+-----------------------------------
+Parsing: tôi muốn tìm hiểu tour này
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V tìm hiểu
+				NP
+					NPI
+						N tour
+					DEMON này
+-----------------------------------
+Parsing: tôi muốn biết thêm
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V biết
+			ADV_VTAIL thêm
+-----------------------------------
+Parsing: giá rẻ quá
+S
+	SUBJ
+		NP
+			NPI
+				N giá
+	PRED
+		ADJP
+			ADJ rẻ
+			ADV_ATAIL quá
+-----------------------------------
+Parsing: tôi muốn tìm khách sạn
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V tìm
+				NP
+					NPI
+						N khách sạn
+-----------------------------------
+Parsing: tôi cần phòng cho hai người
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				V cần
+				NP
+					NPI
+						N phòng
+					PP
+						P cho
+						NP
+							NPI
+								NUM hai
+								N người
+-----------------------------------
+Parsing: tôi muốn đặt vé máy bay
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V đặt
+				NP
+					NPI
+						N vé máy bay
+-----------------------------------
+Parsing: anh muốn biết lịch trình cho xe khách 
+S
+	SUBJ
+		NP
+			PRO anh
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V biết
+				NP
+					NPI
+						N lịch trình
+					PP
+						P cho
+						NP
+							NPI
+								N xe khách
+-----------------------------------
+Parsing: tôi muốn đổi tiền
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V đổi
+				NP
+					NPI
+						N tiền
+-----------------------------------
+Parsing: tôi muốn tìm nhà hàng ngon
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V tìm
+				NP
+					NPI
+						N nhà hàng
+						ADJ ngon
+-----------------------------------
+Parsing: tôi muốn tìm quán cà phê cùng không gian đẹp
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD muốn
+				V tìm
+				NP
+					NPI
+						N quán cà phê
+					PP
+						P cùng
+						NP
+							NPI
+								N không gian
+								ADJ đẹp
+-----------------------------------
+Parsing: tôi sẽ thanh toán tiền sau
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD sẽ
+				V thanh toán
+				NP
+					NPI
+						N tiền
+			ADV_VTAIL sau
+-----------------------------------
+Parsing: tôi bận
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		ADJP
+			ADJ bận
+-----------------------------------
+Parsing: tôi không có thời gian
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD không
+				V có
+				NP
+					NPI
+						N thời gian
+-----------------------------------
+Parsing: tôi không rảnh
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		ADJP
+			ADV_AHEAD không
+			ADJ rảnh
+-----------------------------------
+Parsing: tôi sẽ xem xét sau
+S
+	SUBJ
+		NP
+			PRO tôi
+	PRED
+		VP
+			VPI
+				ADV_VHEAD sẽ
+				V xem xét
+			ADV_VTAIL sau
