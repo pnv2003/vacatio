@@ -15,12 +15,7 @@ class ContextFreeGrammar:
     def __str__(self) -> str:
 
         return '\n'.join([
-            f"{lhs} -> {' | '.join(
-                [
-                    ' '.join(rhs) 
-                    for rhs in rhslist
-                ]
-            )}" 
+            f"{lhs} -> {' | '.join([' '.join(rhs) for rhs in rhslist])}" 
             for lhs, rhslist in self.rules.items()
         ])
     
