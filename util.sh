@@ -15,8 +15,8 @@ STUDENT_ID="2112070"
 PROJ_P_LANG="python"
 
 # DO NOT CHANGE BELOW VARIABLES
-S_OUT="`pwd`/$STUDENT_ID/output"
-S_IN="`pwd`/input"
+S_OUT="/`pwd`/$STUDENT_ID/output"
+S_IN="/`pwd`/input"
 
 # default: do nothing
 function run_ { echo "Please give either command submit/test" ; }
@@ -44,7 +44,7 @@ function run_submit {
 	echo "make submit file $STUDENT_ID.zip"
 	# zip PROJ_P_LANG -o $STUDENT_ID.zip
 	# docker run --rm -ti -v `pwd`:/data thanhhungqb/images:zip-2023  zip -r /data/$STUDENT_ID.zip python java util.sh
-	docker run --rm -ti -v `pwd`:/data thanhhungqb/images:zip-2023  zip -r /data/$STUDENT_ID.zip . -i .
+	docker run --rm -ti -v /`pwd`:/data thanhhungqb/images:zip-2023  zip -r /data/$STUDENT_ID.zip src main.py util.sh
 	echo "Please check file $STUDENT_ID.zip to make sure all correct directories/files included"
 }
 
