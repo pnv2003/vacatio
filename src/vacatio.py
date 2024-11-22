@@ -190,7 +190,7 @@ NPI -> N | NUM N | QUANT N | N ADJ
 VP -> VPI | VPI ADV_VTAIL 
 VPI -> V | V NP | ADV_VHEAD V | ADV_VHEAD V NP
 ADJP -> ADJ | ADV_AHEAD ADJ | ADJ ADV_ATAIL
-PP -> P | P NP
+PP -> P NP
 """ +
         "\n".join([
             f"{lhs} -> {' | '.join([ ' '.join(rhs) for rhs in rhslist ])}"
