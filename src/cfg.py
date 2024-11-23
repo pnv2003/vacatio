@@ -22,7 +22,7 @@ class ContextFreeGrammar:
 
     def save(self, filename):
 
-        with open(filename, 'w+') as f:
+        with open(filename, 'w+', encoding='utf-8') as f:
             f.write(str(self))
 
 
@@ -52,7 +52,7 @@ class ContextFreeGrammar:
         """
         # sentences = []
         count = 0
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding='utf-8') as f:
             f.write('')
 
         # perform DFS on tree
@@ -65,7 +65,7 @@ class ContextFreeGrammar:
             seq, sent = stack.pop(random.randint(0, len(stack) - 1)) 
 
             if not seq:
-                with open(filename, 'a') as f:
+                with open(filename, 'a', encoding='utf-8') as f:
                     f.write(' '.join(sent) + '\n')
                 count += 1
                 if count >= max_samples:
@@ -90,7 +90,7 @@ class ContextFreeGrammar:
         Parse a sentence using the grammar with a simple top-down parser
         """
         
-        with open(filename, 'a') as f:
+        with open(filename, 'a', encoding='utf-8') as f:
             f.write('-----------------------------------\n')
             f.write(f"Parsing: {sentence}\n")
         stack = [([self.start], 0, [])]
@@ -128,7 +128,7 @@ class ContextFreeGrammar:
         """
         Parse a list of sentences
         """
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding='utf-8') as f:
             f.write('')
 
         for sent in sentences:
@@ -136,7 +136,7 @@ class ContextFreeGrammar:
     
     def _dump_parse_tree(self, rules, filename):
 
-        with open(filename, 'a') as f:
+        with open(filename, 'a', encoding='utf-8') as f:
             
             if not rules:
                 f.write("Failed to parse the sentence!\n")
