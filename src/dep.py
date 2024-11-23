@@ -1,9 +1,3 @@
-from hmac import new
-from underthesea import dependency_parse
-
-def underthesea_dep_parse(text):
-    return dependency_parse(text)
-    
 class Item:
 
     def __init__(self, index, word, pos):
