@@ -124,6 +124,12 @@ class DependencyGrammar:
         else:
             raise ValueError(f'Invalid transition: {transition}')
         
+        if not buffer:
+            # add root dependency
+            head = stack.pop(0)
+            tail = stack.pop(0)
+            new_dep = Dependency(head, tail, 'root')
+        
         if save:
             with open(self.PARSE_FILE, 'a', encoding='utf-8') as f:
                 

@@ -19,7 +19,7 @@ RIGHT_ARC       ['ROOT', 'nhắc', 'tour']                 ['được_không', '
 REDUCE          ['ROOT', 'nhắc']                         ['được_không', '?']                                                                                                      
 RIGHT_ARC       ['ROOT', 'nhắc', 'được_không']           ['?']                                                                            nhắc --(discourse)-> được_không         
 REDUCE          ['ROOT', 'nhắc']                         ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'nhắc', '?']                    []                                                                               nhắc --(punct)-> ?                      
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> nhắc                    
 -----------------------------------
 -----------------------------------
 Parsing: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
@@ -40,7 +40,7 @@ LEFT_ARC        ['ROOT']                                 ['hết', 'bao_lâu', '
 SHIFT           ['ROOT', 'hết']                          ['bao_lâu', '?']                                                                                                         
 RIGHT_ARC       ['ROOT', 'hết', 'bao_lâu']               ['?']                                                                            hết --(obj)-> bao_lâu                   
 REDUCE          ['ROOT', 'hết']                          ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'hết', '?']                     []                                                                               hết --(punct)-> ?                       
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> hết                     
 -----------------------------------
 -----------------------------------
 Parsing: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
@@ -61,7 +61,7 @@ LEFT_ARC        ['ROOT']                                 ['hết', 'bao_lâu', '
 SHIFT           ['ROOT', 'hết']                          ['bao_lâu', '?']                                                                                                         
 RIGHT_ARC       ['ROOT', 'hết', 'bao_lâu']               ['?']                                                                            hết --(obj)-> bao_lâu                   
 REDUCE          ['ROOT', 'hết']                          ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'hết', '?']                     []                                                                               hết --(punct)-> ?                       
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> hết                     
 -----------------------------------
 -----------------------------------
 Parsing: có bao nhiêu tour đi Phú Quốc vậy bạn?
@@ -82,7 +82,7 @@ RIGHT_ARC       ['ROOT', 'có', 'vậy']                    ['bạn', '?']      
 RIGHT_ARC       ['ROOT', 'có', 'vậy', 'bạn']             ['?']                                                                            vậy --(compound)-> bạn                  
 REDUCE          ['ROOT', 'có', 'vậy']                    ['?']                                                                                                                    
 REDUCE          ['ROOT', 'có']                           ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'có', '?']                      []                                                                               có --(punct)-> ?                        
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> có                      
 -----------------------------------
 -----------------------------------
 Parsing: tour Nha Trang đi bằng phương tiện gì vậy?
@@ -103,7 +103,7 @@ REDUCE          ['ROOT', 'đi', 'phương_tiện']            ['vậy', '?']
 REDUCE          ['ROOT', 'đi']                           ['vậy', '?']                                                                                                             
 RIGHT_ARC       ['ROOT', 'đi', 'vậy']                    ['?']                                                                            đi --(discourse)-> vậy                  
 REDUCE          ['ROOT', 'đi']                           ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'đi', '?']                      []                                                                               đi --(punct)-> ?                        
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> đi                      
 -----------------------------------
 -----------------------------------
 Parsing: đi Nha Trang có những ngày nào nhỉ?
@@ -124,5 +124,5 @@ REDUCE          ['ROOT', 'có', 'ngày']                   ['nhỉ', '?']
 REDUCE          ['ROOT', 'có']                           ['nhỉ', '?']                                                                                                             
 RIGHT_ARC       ['ROOT', 'có', 'nhỉ']                    ['?']                                                                            có --(discourse)-> nhỉ                  
 REDUCE          ['ROOT', 'có']                           ['?']                                                                                                                    
-RIGHT_ARC       ['ROOT', 'có', '?']                      []                                                                               có --(punct)-> ?                        
+RIGHT_ARC       ['?']                                    []                                                                               ROOT --(root)-> có                      
 -----------------------------------
