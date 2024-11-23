@@ -1,0 +1,128 @@
+-----------------------------------
+Parsing: em có thể nhắc lại tất cả các tour được không?
+-----------------------------------
+Tokens: ROOT (ROOT) em (PRO) có_thể (AUX) nhắc (V) lại (ADV) tất_cả (DET) các (DET) tour (N) được_không (DISC) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['em', 'có_thể', 'nhắc', 'lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                                              
+SHIFT           ['ROOT', 'em']                           ['có_thể', 'nhắc', 'lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                                                    
+SHIFT           ['ROOT', 'em', 'có_thể']                 ['nhắc', 'lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                                                              
+LEFT_ARC        ['ROOT', 'em']                           ['nhắc', 'lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                      nhắc --(aux)-> có_thể                   
+LEFT_ARC        ['ROOT']                                 ['nhắc', 'lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                      nhắc --(nsubj)-> em                     
+SHIFT           ['ROOT', 'nhắc']                         ['lại', 'tất_cả', 'các', 'tour', 'được_không', '?']                                                                      
+RIGHT_ARC       ['ROOT', 'nhắc', 'lại']                  ['tất_cả', 'các', 'tour', 'được_không', '?']                                     nhắc --(advmod)-> lại                   
+REDUCE          ['ROOT', 'nhắc']                         ['tất_cả', 'các', 'tour', 'được_không', '?']                                                                             
+SHIFT           ['ROOT', 'nhắc', 'tất_cả']               ['các', 'tour', 'được_không', '?']                                                                                       
+SHIFT           ['ROOT', 'nhắc', 'tất_cả', 'các']        ['tour', 'được_không', '?']                                                                                              
+LEFT_ARC        ['ROOT', 'nhắc', 'tất_cả']               ['tour', 'được_không', '?']                                                      tour --(det)-> các                      
+LEFT_ARC        ['ROOT', 'nhắc']                         ['tour', 'được_không', '?']                                                      tour --(det)-> tất_cả                   
+RIGHT_ARC       ['ROOT', 'nhắc', 'tour']                 ['được_không', '?']                                                              nhắc --(obj)-> tour                     
+REDUCE          ['ROOT', 'nhắc']                         ['được_không', '?']                                                                                                      
+RIGHT_ARC       ['ROOT', 'nhắc', 'được_không']           ['?']                                                                            nhắc --(discourse)-> được_không         
+REDUCE          ['ROOT', 'nhắc']                         ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'nhắc', '?']                    []                                                                               nhắc --(punct)-> ?                      
+-----------------------------------
+-----------------------------------
+Parsing: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
+-----------------------------------
+Tokens: ROOT (ROOT) đi (V) từ (P) Hồ_Chí_Minh (N-LOC) tới (P) Nha_Trang (N-LOC) hết (V) bao_lâu (N-Q) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['đi', 'từ', 'Hồ_Chí_Minh', 'tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                                                   
+SHIFT           ['ROOT', 'đi']                           ['từ', 'Hồ_Chí_Minh', 'tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                                                         
+SHIFT           ['ROOT', 'đi', 'từ']                     ['Hồ_Chí_Minh', 'tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                                                               
+LEFT_ARC        ['ROOT', 'đi']                           ['Hồ_Chí_Minh', 'tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                       Hồ_Chí_Minh --(case)-> từ               
+RIGHT_ARC       ['ROOT', 'đi', 'Hồ_Chí_Minh']            ['tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                                      đi --(obj)-> Hồ_Chí_Minh                
+REDUCE          ['ROOT', 'đi']                           ['tới', 'Nha_Trang', 'hết', 'bao_lâu', '?']                                                                              
+SHIFT           ['ROOT', 'đi', 'tới']                    ['Nha_Trang', 'hết', 'bao_lâu', '?']                                                                                     
+LEFT_ARC        ['ROOT', 'đi']                           ['Nha_Trang', 'hết', 'bao_lâu', '?']                                             Nha_Trang --(case)-> tới                
+RIGHT_ARC       ['ROOT', 'đi', 'Nha_Trang']              ['hết', 'bao_lâu', '?']                                                          đi --(obj)-> Nha_Trang                  
+REDUCE          ['ROOT', 'đi']                           ['hết', 'bao_lâu', '?']                                                                                                  
+LEFT_ARC        ['ROOT']                                 ['hết', 'bao_lâu', '?']                                                          hết --(csubj)-> đi                      
+SHIFT           ['ROOT', 'hết']                          ['bao_lâu', '?']                                                                                                         
+RIGHT_ARC       ['ROOT', 'hết', 'bao_lâu']               ['?']                                                                            hết --(obj)-> bao_lâu                   
+REDUCE          ['ROOT', 'hết']                          ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'hết', '?']                     []                                                                               hết --(punct)-> ?                       
+-----------------------------------
+-----------------------------------
+Parsing: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
+-----------------------------------
+Tokens: ROOT (ROOT) đi (V) từ (P) Hồ_Chí_Minh (N-LOC) tới (P) Đà_Nẵng (N-LOC) hết (V) bao_lâu (N-Q) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['đi', 'từ', 'Hồ_Chí_Minh', 'tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                                                     
+SHIFT           ['ROOT', 'đi']                           ['từ', 'Hồ_Chí_Minh', 'tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                                                           
+SHIFT           ['ROOT', 'đi', 'từ']                     ['Hồ_Chí_Minh', 'tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                                                                 
+LEFT_ARC        ['ROOT', 'đi']                           ['Hồ_Chí_Minh', 'tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                         Hồ_Chí_Minh --(case)-> từ               
+RIGHT_ARC       ['ROOT', 'đi', 'Hồ_Chí_Minh']            ['tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                                        đi --(obj)-> Hồ_Chí_Minh                
+REDUCE          ['ROOT', 'đi']                           ['tới', 'Đà_Nẵng', 'hết', 'bao_lâu', '?']                                                                                
+SHIFT           ['ROOT', 'đi', 'tới']                    ['Đà_Nẵng', 'hết', 'bao_lâu', '?']                                                                                       
+LEFT_ARC        ['ROOT', 'đi']                           ['Đà_Nẵng', 'hết', 'bao_lâu', '?']                                               Đà_Nẵng --(case)-> tới                  
+RIGHT_ARC       ['ROOT', 'đi', 'Đà_Nẵng']                ['hết', 'bao_lâu', '?']                                                          đi --(obj)-> Đà_Nẵng                    
+REDUCE          ['ROOT', 'đi']                           ['hết', 'bao_lâu', '?']                                                                                                  
+LEFT_ARC        ['ROOT']                                 ['hết', 'bao_lâu', '?']                                                          hết --(csubj)-> đi                      
+SHIFT           ['ROOT', 'hết']                          ['bao_lâu', '?']                                                                                                         
+RIGHT_ARC       ['ROOT', 'hết', 'bao_lâu']               ['?']                                                                            hết --(obj)-> bao_lâu                   
+REDUCE          ['ROOT', 'hết']                          ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'hết', '?']                     []                                                                               hết --(punct)-> ?                       
+-----------------------------------
+-----------------------------------
+Parsing: có bao nhiêu tour đi Phú Quốc vậy bạn?
+-----------------------------------
+Tokens: ROOT (ROOT) có (V) bao_nhiêu (DET-Q) tour (N) đi (V) Phú_Quốc (N-LOC) vậy (DISC) bạn (PRO) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['có', 'bao_nhiêu', 'tour', 'đi', 'Phú_Quốc', 'vậy', 'bạn', '?']                                                         
+SHIFT           ['ROOT', 'có']                           ['bao_nhiêu', 'tour', 'đi', 'Phú_Quốc', 'vậy', 'bạn', '?']                                                               
+SHIFT           ['ROOT', 'có', 'bao_nhiêu']              ['tour', 'đi', 'Phú_Quốc', 'vậy', 'bạn', '?']                                                                            
+LEFT_ARC        ['ROOT', 'có']                           ['tour', 'đi', 'Phú_Quốc', 'vậy', 'bạn', '?']                                    tour --(det)-> bao_nhiêu                
+RIGHT_ARC       ['ROOT', 'có', 'tour']                   ['đi', 'Phú_Quốc', 'vậy', 'bạn', '?']                                            có --(obj)-> tour                       
+RIGHT_ARC       ['ROOT', 'có', 'tour', 'đi']             ['Phú_Quốc', 'vậy', 'bạn', '?']                                                  tour --(acl)-> đi                       
+RIGHT_ARC       ['ROOT', 'có', 'tour', 'đi', 'Phú_Quốc'] ['vậy', 'bạn', '?']                                                              đi --(obj)-> Phú_Quốc                   
+REDUCE          ['ROOT', 'có', 'tour', 'đi']             ['vậy', 'bạn', '?']                                                                                                      
+REDUCE          ['ROOT', 'có', 'tour']                   ['vậy', 'bạn', '?']                                                                                                      
+REDUCE          ['ROOT', 'có']                           ['vậy', 'bạn', '?']                                                                                                      
+RIGHT_ARC       ['ROOT', 'có', 'vậy']                    ['bạn', '?']                                                                     có --(discourse)-> vậy                  
+RIGHT_ARC       ['ROOT', 'có', 'vậy', 'bạn']             ['?']                                                                            vậy --(compound)-> bạn                  
+REDUCE          ['ROOT', 'có', 'vậy']                    ['?']                                                                                                                    
+REDUCE          ['ROOT', 'có']                           ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'có', '?']                      []                                                                               có --(punct)-> ?                        
+-----------------------------------
+-----------------------------------
+Parsing: tour Nha Trang đi bằng phương tiện gì vậy?
+-----------------------------------
+Tokens: ROOT (ROOT) tour (N) Nha_Trang (N-LOC) đi (V) bằng (P) phương_tiện (N) gì (PRO-Q) vậy (DISC) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['tour', 'Nha_Trang', 'đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                     
+SHIFT           ['ROOT', 'tour']                         ['Nha_Trang', 'đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                             
+RIGHT_ARC       ['ROOT', 'tour', 'Nha_Trang']            ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                  tour --(compound)-> Nha_Trang           
+REDUCE          ['ROOT', 'tour']                         ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                                          
+LEFT_ARC        ['ROOT']                                 ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                  đi --(nsubj)-> tour                     
+SHIFT           ['ROOT', 'đi']                           ['bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                                                
+SHIFT           ['ROOT', 'đi', 'bằng']                   ['phương_tiện', 'gì', 'vậy', '?']                                                                                        
+LEFT_ARC        ['ROOT', 'đi']                           ['phương_tiện', 'gì', 'vậy', '?']                                                phương_tiện --(case)-> bằng             
+RIGHT_ARC       ['ROOT', 'đi', 'phương_tiện']            ['gì', 'vậy', '?']                                                               đi --(obj)-> phương_tiện                
+RIGHT_ARC       ['ROOT', 'đi', 'phương_tiện', 'gì']      ['vậy', '?']                                                                     phương_tiện --(compound)-> gì           
+REDUCE          ['ROOT', 'đi', 'phương_tiện']            ['vậy', '?']                                                                                                             
+REDUCE          ['ROOT', 'đi']                           ['vậy', '?']                                                                                                             
+RIGHT_ARC       ['ROOT', 'đi', 'vậy']                    ['?']                                                                            đi --(discourse)-> vậy                  
+REDUCE          ['ROOT', 'đi']                           ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'đi', '?']                      []                                                                               đi --(punct)-> ?                        
+-----------------------------------
+-----------------------------------
+Parsing: đi Nha Trang có những ngày nào nhỉ?
+-----------------------------------
+Tokens: ROOT (ROOT) đi (V) Nha_Trang (N-LOC) có (V) những (DET) ngày (N) nào (PRO-Q) nhỉ (DISC) ? (PUNCT)
+
+SHIFT           ['ROOT']                                 ['đi', 'Nha_Trang', 'có', 'những', 'ngày', 'nào', 'nhỉ', '?']                                                            
+SHIFT           ['ROOT', 'đi']                           ['Nha_Trang', 'có', 'những', 'ngày', 'nào', 'nhỉ', '?']                                                                  
+RIGHT_ARC       ['ROOT', 'đi', 'Nha_Trang']              ['có', 'những', 'ngày', 'nào', 'nhỉ', '?']                                       đi --(obj)-> Nha_Trang                  
+REDUCE          ['ROOT', 'đi']                           ['có', 'những', 'ngày', 'nào', 'nhỉ', '?']                                                                               
+LEFT_ARC        ['ROOT']                                 ['có', 'những', 'ngày', 'nào', 'nhỉ', '?']                                       có --(csubj)-> đi                       
+SHIFT           ['ROOT', 'có']                           ['những', 'ngày', 'nào', 'nhỉ', '?']                                                                                     
+SHIFT           ['ROOT', 'có', 'những']                  ['ngày', 'nào', 'nhỉ', '?']                                                                                              
+LEFT_ARC        ['ROOT', 'có']                           ['ngày', 'nào', 'nhỉ', '?']                                                      ngày --(det)-> những                    
+RIGHT_ARC       ['ROOT', 'có', 'ngày']                   ['nào', 'nhỉ', '?']                                                              có --(obj)-> ngày                       
+RIGHT_ARC       ['ROOT', 'có', 'ngày', 'nào']            ['nhỉ', '?']                                                                     ngày --(compound)-> nào                 
+REDUCE          ['ROOT', 'có', 'ngày']                   ['nhỉ', '?']                                                                                                             
+REDUCE          ['ROOT', 'có']                           ['nhỉ', '?']                                                                                                             
+RIGHT_ARC       ['ROOT', 'có', 'nhỉ']                    ['?']                                                                            có --(discourse)-> nhỉ                  
+REDUCE          ['ROOT', 'có']                           ['?']                                                                                                                    
+RIGHT_ARC       ['ROOT', 'có', '?']                      []                                                                               có --(punct)-> ?                        
+-----------------------------------

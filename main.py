@@ -1,4 +1,4 @@
-# from src import vacatio
+from src import vacatio
 
 # GRAMMAR_FILE = 'output/grammar.txt'
 # SAMPLE_FILE = 'output/samples.txt'
@@ -27,12 +27,9 @@
 # grammar.parse_all(sents, filename=PARSE_FILE)
 # print("Parse results saved to", PARSE_FILE)
 
-import os
-from underthesea import dependency_parse
+questions = []
+with open('input/questions.txt', 'r', encoding='utf-8') as f:
+    questions = f.read().splitlines()
 
-with open('output/dep_parse.txt', 'w') as g:
-    with open('input/questions.txt', 'r') as f:
-        for line in f:
-            q = line.strip()
-            g.write('\n')
-            g.write(str(dependency_parse(q)))
+grammar = vacatio.dependency_grammar()
+grammar.parse_all(questions)
