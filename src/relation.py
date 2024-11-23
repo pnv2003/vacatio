@@ -16,21 +16,14 @@ class Relation:
     def __repr__(self):
         return f"({self.pred} {' '.join(map(str, self.args))})"
 
+# life is full of heuristics
+# this is one of them
 def extract_relations(dependencies: List[Dependency]):
 
     # extract useful relations based on database in input/database.txt
     relations = []
 
     for dep in dependencies:
-
-        # if dep.label == 'root':
-        #     relations.append(Relation('MVERB', dep.tail.word))
-        
-        # if dep.label in ['nsubj', 'csubj']:
-        #     relations.append(Relation('SUBJ', dep.tail.word))
-
-        # if dep.label == 'obj':
-        #     relations.append(Relation('OBJ', dep.tail.word))
 
         if dep.tail.word == 'được_không':
             relations.append(Relation('COMMAND', dep.head.word))
