@@ -99,6 +99,8 @@ POS_DICT = {
 # transition getter
 def get_transition(features, dependencies):
 
+    sword = features['sword']
+    bword = features['bword']
     spos = features['spos']
     bpos = features['bpos']
     sindex = features['sindex']
@@ -125,6 +127,8 @@ def get_transition(features, dependencies):
     if spos in ['PRO', 'N'] and bpos == 'V':
         if has_main_verb:
             return 'RIGHT_ARC acl'
+        if sword == 'tour' and bword == 'đi': # super hacky way to handle this (bruh moment)
+            return 'LEFT_ARC obj'
         return 'LEFT_ARC nsubj'
     if spos in ['DET', 'DET-Q'] and bpos == 'N':
         return 'LEFT_ARC det'

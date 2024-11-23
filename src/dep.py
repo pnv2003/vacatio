@@ -87,6 +87,8 @@ class DependencyGrammar:
         
         features = {}
 
+        features['sword'] = stack[-1].word if stack else None
+        features['bword'] = buffer[0].word if buffer else None
         features['spos'] = stack[-1].pos if stack else None
         features['bpos'] = buffer[0].pos if buffer else None
         features['sindex'] = stack[-1].index if stack else None
