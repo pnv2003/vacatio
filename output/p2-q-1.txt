@@ -1,0 +1,67 @@
+
+A simple dependency grammar using an arc-eager shift-reduce parser, with the following components:
+
+Tokenizer: 
+A simple tokenizer based on space separation and a token map for multi-word tokens:
+
+{'có thể': 'có_thể', 'tất cả': 'tất_cả', 'được không': 'được_không', 'bao lâu': 'bao_lâu', 'bao nhiêu': 'bao_nhiêu', 'phương tiện': 'phương_tiện', 'Hồ Chí Minh': 'Hồ_Chí_Minh', 'Nha Trang': 'Nha_Trang', 'Phú Quốc': 'Phú_Quốc', 'Đà Nẵng': 'Đà_Nẵng'}
+
+Part-of-speech tagger: 
+A simple part-of-speech tagger based on a predefined pos dictionary:
+
+{'em': 'PRO', 'có_thể': 'AUX', 'nhắc': 'V', 'lại': 'ADV', 'tất_cả': 'DET', 'các': 'DET', 'tour': 'N', 'được_không': 'DISC', 'từ': 'P', 'tới': 'P', 'đi': 'V', 'hết': 'V', 'bao_lâu': 'N-Q', 'có': 'V', 'bao_nhiêu': 'DET-Q', 'phương_tiện': 'N', 'vậy': 'DISC', 'bạn': 'PRO', 'bằng': 'P', 'gì': 'PRO-Q', 'những': 'DET', 'ngày': 'N', 'nào': 'PRO-Q', 'nhỉ': 'DISC', 'Hồ_Chí_Minh': 'N-LOC', 'Nha_Trang': 'N-LOC', 'Phú_Quốc': 'N-LOC', 'Đà_Nẵng': 'N-LOC', '?': 'PUNCT'}
+
+Transition function: A function that takes a dictionary of features and returns a transition.
+
+
+- Features:
+    - sword: The word on top of the stack.
+    - bword: The first word in the buffer.
+    - spos: The part-of-speech tag of the word on top of the stack.
+    - bpos: The part-of-speech tag of the first word in the buffer.
+    - sindex: The index of the word on top of the stack.
+    - bindex: The index of the first word in the buffer.
+    - has_main_verb: Whether the stack contains a main verb.
+        
+
+
+- Transitions:
+
+    - SHIFT: Move the first word in the buffer to the top of the stack.
+    - LEFT_ARC label: Create a dependency with the first word in the buffer as the head and the word on top of the stack as the tail.
+    - RIGHT_ARC label: Create a dependency with the word on top of the stack as the head and the first word in the buffer as the tail.
+    - REDUCE: Remove the word on top of the stack.
+        
+
+- Rules: (s = stack top item, b = buffer first item)
+
+    - SHIFT when:
+        - s = ROOT
+        - b = ROOT, AUX, DET, DET-Q, P
+
+    - LEFT_ARC label when:
+
+        - s = AUX and b = V         -> aux
+        - s = PRO/N and b = V       -> nsubj | acl (if has_main_verb)
+        - s = DET/DET-Q and b = N   -> det
+        - s = P and b = N-LOC/N     -> case
+        - s = V and b = V           -> csubj
+
+    - RIGHT_ARC label when:
+
+        - s = V and b = ADV             -> advmod
+        - s = V and b = PRO/N/N-Q/N-LOC -> obj | obl (if b has case)
+        - s = V and b = DISC            -> discourse
+        - s = V and b = PUNCT           -> punct
+        - s = DISC                      -> compound
+        - s = N/N-LOC and b = N/N-LOC   -> compound
+        - s = N and b = PRO-Q           -> compound
+
+    - REDUCE when:
+
+        - s = ADV and b = DET
+        - s != V and b = DISC/PUNCT
+        - s = N-LOC and b = P/V
+        - s = V and b = DISC/PUNCT and has_main_verb
+    
+

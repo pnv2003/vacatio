@@ -1,0 +1,36 @@
+---1---
+(COMMAND (nhắc [THEME <ALL t1 tour>]))
+
+---2---
+(WH-QUERY (hết [THEME <HOW-MUCH h1 TIME>] [FROM-LOC (NAME h3 Hồ_Chí_Minh)] [TO-LOC (NAME n1 Nha_Trang)]))
+
+---3---
+(WH-QUERY (hết [THEME <HOW-MUCH h1 TIME>] [FROM-LOC (NAME h3 Hồ_Chí_Minh)] [TO-LOC (NAME đ1 Đà_Nẵng)]))
+
+---4---
+(WH-QUERY (có [THEME <HOW-MANY t1 tour>] [TO-LOC (NAME p1 Phú_Quốc)]))
+
+---5---
+(WH-QUERY (đi [THEME <THE t1 tour>] [INSTR <WH p1 phương_tiện>] [TO-LOC (NAME n1 Nha_Trang)]))
+
+---6---
+(WH-QUERY (có [THEME <WH n1 ngày>] [TO-LOC (NAME n2 Nha_Trang)]))
+
+---1---
+FILTER TIME BY [None, None, None, None, None]
+
+---2---
+SELECT 4 FROM RUN-TIME WHERE ['NT', 'HCM', None, None]
+
+---3---
+SELECT 4 FROM RUN-TIME WHERE ['DN', 'HCM', None, None]
+
+---4---
+FILTER TIME BY ['PQ', None, None, 'PQ', None]
+
+---5---
+SELECT 2 FROM BY WHERE ['NT', None]
+
+---6---
+SELECT (3, 5) FROM TIME WHERE ['NT', None, None, 'NT', None]
+

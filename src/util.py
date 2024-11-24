@@ -28,6 +28,13 @@ class Tokenizer:
 
         return tokens
     
+    def __str__(self):
+        return f"""
+A simple tokenizer based on space separation and a token map for multi-word tokens:
+
+{self.token_map}
+"""
+    
 class POSTagger:
 
     # use a predefined pos dictionary
@@ -50,3 +57,33 @@ class POSTagger:
                 print(f'Warning: Unknown token "{token}"')
 
         return pos_tags
+    
+    def __str__(self):
+        return f"""
+A simple part-of-speech tagger based on a predefined pos dictionary:
+
+{self.pos_dict}
+"""
+    
+class VariableManager:
+
+    def __init__(self):
+        self.variables = {}
+
+    def set(self, name, value):
+
+        # name: tour, time -> key: t1, t2, ...
+        
+        key = name.lower()[0] + '1'
+
+        while key in self.variables:
+            if self.variables[key] == value:
+                break
+            key = key[:-1] + str(int(key[-1]) + 1)
+
+        self.variables[key] = value
+        
+        return key
+
+    def get(self, name):
+        return self.variables.get(name, None)

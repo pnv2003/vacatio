@@ -1,8 +1,10 @@
 from typing import List
 from src.cfg import ContextFreeGrammar
-from src.dep import Dependency, DependencyGrammar
+from src.dep import Dependency, DependencyGrammar, TransitionClassifier
+from src.logic import Entity, LogicalForm, ThematicRole
+from src.procedure import FilterProcedure, Procedure, SelectProcedure
 from src.relation import Relation
-from src.util import POSTagger, Tokenizer
+from src.util import POSTagger, Tokenizer, VariableManager
 
 NOUNS = ["phòng", "xe", "máy bay", "nhà hàng", "khách sạn", "bãi biển", "tiền", "vé", "dịch vụ", "lịch trình", "đồ ăn", "thức uống", "ẩm thực", "thời tiết", "địa điểm", "thời gian", "ngày", "giờ", "tour", "giá", "người", "vé máy bay", "không gian", "quán cà phê", "lịch trình", "xe khách"]
 VERBS = ["đặt", "mua", "thuê", "đi", "tìm", "thanh toán", "trả", "nhận", "tìm hiểu", "biết", "cần", "đổi", "có", "gọi", "xem xét"]
@@ -99,8 +101,40 @@ POS_DICT = {
 
 
 # transition getter
-def get_transition(features, dependencies):
+def get_transition(features):
+    """(s = stack top item, b = buffer first item)
 
+    - SHIFT when:
+        - s = ROOT
+        - b = ROOT, AUX, DET, DET-Q, P
+
+    - LEFT_ARC label when:
+
+        - s = AUX and b = V         -> aux
+        - s = PRO/N and b = V       -> nsubj | acl (if has_main_verb)
+        - s = DET/DET-Q and b = N   -> det
+        - s = P and b = N-LOC/N     -> case
+        - s = V and b = V           -> csubj
+
+    - RIGHT_ARC label when:
+
+        - s = V and b = ADV             -> advmod
+        - s = V and b = PRO/N/N-Q/N-LOC -> obj | obl (if b has case)
+        - s = V and b = DISC            -> discourse
+        - s = V and b = PUNCT           -> punct
+        - s = DISC                      -> compound
+        - s = N/N-LOC and b = N/N-LOC   -> compound
+        - s = N and b = PRO-Q           -> compound
+
+    - REDUCE when:
+
+        - s = ADV and b = DET
+        - s != V and b = DISC/PUNCT
+        - s = N-LOC and b = P/V
+        - s = V and b = DISC/PUNCT and has_main_verb
+    """
+
+    deps = features['deps']
     sword = features['sword']
     bword = features['bword']
     spos = features['spos']
@@ -145,7 +179,7 @@ def get_transition(features, dependencies):
 
         if any([
             dep.head.index == sindex and dep.label == 'case'
-            for dep in dependencies
+            for dep in deps
         ]):
             return 'RIGHT_ARC obl'
         
@@ -169,15 +203,8 @@ def dependency_grammar() -> DependencyGrammar:
     return DependencyGrammar(
         tokenizer=Tokenizer(token_map=TOKEN_MAP),
         pos_tagger=POSTagger(pos_dict=POS_DICT),
-        get_transition=get_transition
+        transition_classifier=TransitionClassifier(get_transition)
     )
-
-QUERY_MAP = {
-    'bao_nhiêu': 'HOW_MANY',
-    'bao_lâu': 'HOW_LONG',
-    'gì': 'WH',
-    'nào': 'WH'
-}
 
 # life is full of heuristics
 # this is one of them
@@ -185,27 +212,274 @@ def extract_relations(dependencies: List[Dependency]):
 
     # extract useful relations based on database in input/database.txt
     relations = []
+    from_loc = None
+    to_loc = None
+    tour_name = None
+    varm = VariableManager()
 
     for dep in dependencies:
 
+        # for main predicates
+        if dep.label == 'root':
+            relations.append(Relation('VERB', dep.tail.word))
+
+        # for quantifiers
+        if dep.label == 'det':
+            if dep.tail.word == 'bao_nhiêu':
+                relations.append(Relation('HOW-MANY', dep.head.word))
+            if dep.tail.word == 'tất_cả':
+                relations.append(Relation('ALL', dep.head.word))
+            if dep.tail.word in ['các', 'những']:
+                relations.append(Relation('PLUR', dep.head.word))
+
+        # for command speech acts
         if dep.tail.word == 'được_không':
             relations.append(Relation('COMMAND', dep.head.word))
 
-        if "-Q" in dep.tail.pos:
-            relations.append(Relation(QUERY_MAP[dep.tail.word], dep.head.word))
-
+        # for locations
         if dep.label == 'case':
             if dep.tail.word == 'từ':
-                relations.append(Relation('FROM-LOC', dep.head.word))
+                from_loc = dep.head.word
             if dep.tail.word == 'đến':
-                relations.append(Relation('TO-LOC', dep.head.word))
+                to_loc = dep.head.word
 
-        if dep.label == 'obj' and dep.head.word == 'đi':
+        # for themes
+        if dep.label == 'obj':
 
-            if dep.tail.pos == 'N-LOC' or dep.tail.word == 'tour':
-                relations.append(Relation('TO-LOC', dep.tail.word))
+            if dep.head.word == 'đi':
+                if dep.tail.pos == 'N-LOC':
+                    if dep.tail.word not in [from_loc, to_loc]:
+                        to_loc = dep.tail.word
+                elif dep.tail.word == 'tour':
+                    if tour_name:
+                        to_loc = tour_name
+                    relations.append(Relation('THEME', dep.tail.word))
 
-        if dep.label == 'compound' and dep.head.word == 'tour':
-            relations.append(Relation('COMP', dep.head.word, dep.tail.word))
+            elif dep.tail.word == 'bao_lâu':
+                relations.append(Relation('HOW-LONG'))
+            else:
+                relations.append(Relation('THEME', dep.tail.word))
+
+        # for compound nouns
+        if dep.label == 'compound' and dep.head.pos in ['N', 'N-LOC']:
+
+            if dep.tail.word in ['gì', 'nào']:
+                relations.append(Relation('WH', dep.head.word))
+            else:
+                relations.append(Relation('THE', dep.head.word))
+                if dep.head.word == 'tour':
+                    tour_name = dep.tail.word
+                else:
+                    relations.append(Relation('COMP', dep.head.word, dep.tail.word))        
+
+    if from_loc:
+        relations.append(Relation('FROM-LOC', from_loc))
+    if to_loc:
+        relations.append(Relation('TO-LOC', to_loc))
+
+    for rel in relations:
+        if rel.args:
+            entity = rel.args[0]
+            key = varm.set(entity, entity)
+            rel.make_variable(key)
+        else:
+            key = varm.set(rel.pred, rel.pred)
+            rel.make_variable(key)
 
     return relations
+
+def logical_formulate(relations: List[Relation]) -> LogicalForm:
+    
+    # speech act
+    lf_spact = None
+    lf_verb = None
+    entities = []
+    thematic_roles = []
+
+    for rel in relations:
+
+        if rel.pred == 'COMMAND':
+            lf_spact = LogicalForm('COMMAND')
+        if rel.pred in ['HOW-MANY', 'HOW-LONG', 'WH']:
+            lf_spact = LogicalForm('WH-QUERY')
+
+            if rel.pred in ['HOW-MANY', 'WH']:
+                thematic_roles.append(ThematicRole(
+                    'INSTR' if rel.args[0] == 'phương_tiện' else 'THEME',
+                    Entity(rel.pred, rel.var, rel.args[0])
+                ))
+
+            elif rel.pred == 'HOW-LONG':
+                thematic_roles.append(ThematicRole(
+                    'THEME',
+                    Entity('HOW-MUCH', rel.var, 'TIME'),
+                ))
+
+        if rel.pred == 'VERB':
+            lf_verb = LogicalForm(rel.args[0])
+            lf_verb.var = rel.var
+
+        if rel.pred in ['ALL', 'THE']:
+            entities.append(Entity(rel.pred, rel.var, rel.args[0]))
+        if rel.pred == 'THEME':
+            thematic_roles.append(ThematicRole('THEME', None, rel.var))
+        if rel.pred == 'FROM-LOC':
+            thematic_roles.append(ThematicRole(
+                'FROM-LOC', 
+                Entity('NAME', rel.var, rel.args[0]), 
+                rel.var
+            ))
+        if rel.pred == 'TO-LOC':
+            thematic_roles.append(ThematicRole(
+                'TO-LOC', 
+                Entity('NAME', rel.var, rel.args[0]), 
+                rel.var
+            ))
+
+    for tr in thematic_roles:
+        for e in entities:
+            if tr.var == e.var:
+                tr.entity = e
+                break
+        
+        if tr.entity:
+            lf_verb.add_argument(tr)
+    
+    lf_spact.add_argument(lf_verb)
+    return lf_spact
+
+def procedural_formulate(logical_form: LogicalForm) -> Procedure:
+    
+    DATA = {
+        'tour': 'TOUR',
+        'phương_tiện': 'BY',
+        'ngày': 'TIME',
+    }
+
+    VEHICLE = {
+        'máy bay': 'airplane',
+        'tàu hỏa': 'train',
+    }
+
+    LOCATION = {
+        'Hồ_Chí_Minh': 'HCM',
+        'Nha_Trang': 'NT',
+        'Phú_Quốc': 'PQ',
+        'Đà_Nẵng': 'DN',
+    }
+
+    lf = logical_form
+
+    proc = None
+    thematic_roles = lf.args[0].args
+
+    # type
+    if lf.predicate == 'COMMAND':
+    
+        tr = thematic_roles[0]
+        proc = FilterProcedure(
+            'TIME' if tr.entity.name == 'tour' else '', # TODO: more cases
+            []
+        )
+        
+    for tr in thematic_roles:
+
+        emod = tr.entity.modifier
+
+        if emod == 'HOW-MUCH':
+            proc = SelectProcedure(
+                4,
+                'RUN-TIME',
+                []
+            )
+            
+            break
+    
+        elif emod == 'HOW-MANY':
+            proc = FilterProcedure(
+                'TIME' if tr.entity.name == 'tour' else '', # TODO: more cases
+                []
+            )
+            break
+
+        elif emod == 'WH':
+
+            query = None
+            if tr.entity.name == 'ngày':
+                query = 3, 5
+            elif tr.entity.name == 'phương_tiện':
+                query = 2
+            # TODO: more wh-queries
+
+            proc = SelectProcedure(
+                query,
+                DATA[tr.entity.name],
+                []
+            )
+            break
+
+    if proc.data == 'TOUR':
+        pass
+
+    elif proc.data == 'TIME':
+        
+        tour, dloc, dtime, aloc, atime  = None, None, None, None, None
+
+        for tr in thematic_roles:
+            if tr.role == 'FROM-LOC':
+                dloc = LOCATION[tr.entity.name]
+            elif tr.role == 'TO-LOC':
+                tour = LOCATION[tr.entity.name]
+                aloc = LOCATION[tr.entity.name]
+            elif tr.role == 'TIME':
+                atime = tr.entity.name
+
+            # TODO: FROM-TIME, TO-TIME
+
+        proc.criteria = [tour, dloc, dtime, aloc, atime]
+
+    elif proc.data == 'RUN-TIME':
+
+        tour, dloc, what, runtime = None, None, None, None
+
+        for tr in thematic_roles:
+            if tr.role == 'FROM-LOC':
+                dloc = LOCATION[tr.entity.name]
+            elif tr.role == 'TO-LOC':
+                tour = LOCATION[tr.entity.name]
+            elif tr.role == 'TIME':
+                runtime = tr.entity.name
+
+            # TODO: FOR-TIME
+
+        proc.criteria = [tour, dloc, what, runtime]
+
+    elif proc.data == 'BY':
+
+        tour, vehicle = None, None
+
+        for tr in thematic_roles:
+            if tr.role == 'TO-LOC':
+                tour = LOCATION[tr.entity.name]
+            elif tr.role == 'INSTR' and tr.entity.name in VEHICLE:
+                vehicle = VEHICLE[tr.entity.name]
+
+        proc.criteria = [tour, vehicle]
+
+    return proc
+            
+        
+
+            
+
+            
+
+
+
+                
+
+
+
+
+        
+   

@@ -93,7 +93,7 @@ SHIFT           ['ROOT']                                 ['tour', 'Nha_Trang', '
 SHIFT           ['ROOT', 'tour']                         ['Nha_Trang', 'đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                             
 RIGHT_ARC       ['ROOT', 'tour', 'Nha_Trang']            ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                  tour --(compound)-> Nha_Trang           
 REDUCE          ['ROOT', 'tour']                         ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                                          
-LEFT_ARC        ['ROOT']                                 ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                  đi --(nsubj)-> tour                     
+LEFT_ARC        ['ROOT']                                 ['đi', 'bằng', 'phương_tiện', 'gì', 'vậy', '?']                                  đi --(obj)-> tour                       
 SHIFT           ['ROOT', 'đi']                           ['bằng', 'phương_tiện', 'gì', 'vậy', '?']                                                                                
 SHIFT           ['ROOT', 'đi', 'bằng']                   ['phương_tiện', 'gì', 'vậy', '?']                                                                                        
 LEFT_ARC        ['ROOT', 'đi']                           ['phương_tiện', 'gì', 'vậy', '?']                                                phương_tiện --(case)-> bằng             
