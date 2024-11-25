@@ -1,6 +1,4 @@
-from src.logic import LogicalFormulator
-from src.procedure import ProcedureExecutor
-from src.relation import RelationExtractor
+import re
 from src import vacatio
 
 # GRAMMAR_FILE = 'output/grammar.txt'
@@ -15,33 +13,66 @@ from src import vacatio
 #     sents = f.read().splitlines()
 # grammar.parse_all(sents, filename=PARSE_FILE)
 
+DATABASE_FILE = 'input/database.txt'
+QUESTION_FILE = 'input/questions.txt'
+RELATION_FILE = 'output/p2-q-3.txt'
+LOGICAL_FILE = 'output/p2-q-4.txt'
+ANSWER_FILE = 'output/p2-q-5.txt'
+
 questions = []
-with open('input/questions.txt', 'r', encoding='utf-8') as f:
+with open(QUESTION_FILE, 'r', encoding='utf-8') as f:
     questions = f.read().splitlines()
+
+db = {'TOUR': [], 'TIME': [], 'RUN-TIME': [], 'BY': []}
+with open(DATABASE_FILE, 'r', encoding='utf-8') as f:
+    content = f.read()
+    tour_pattern = re.compile(r'\(TOUR (\w+) (\w+)\)')
+    time_pattern = re.compile(r'\(DTIME (\w+) (\w+) "([^"]+)"\) \(ATIME \w+ (\w+) "([^"]+)"\)')
+    runtime_pattern = re.compile(r'\(RUN-TIME (\w+) (\w+) (\w+) ([\d:]+ \w+)\)')
+    by_pattern = re.compile(r'\(BY (\w+) (\w+)\)')
+
+    db['TOUR'] = tour_pattern.findall(content)
+    db['TIME'] = time_pattern.findall(content)
+    db['RUN-TIME'] = runtime_pattern.findall(content)
+    db['BY'] = by_pattern.findall(content)
 
 grammar = vacatio.dependency_grammar()
 grammar.save()
 dep_lists = grammar.parse_all(questions, save=True)
 
-# print(dep_lists)
+with open(RELATION_FILE, 'w', encoding='utf-8') as f:
+    f.write('')
 
-extractor = RelationExtractor(vacatio.extract_relations, save=True)
-relation_lists = extractor.extract_all(dep_lists)
+with open(LOGICAL_FILE, 'w', encoding='utf-8') as f:
+    f.write('')
 
-# print(relation_lists)
+with open(ANSWER_FILE, 'w', encoding='utf-8') as f:
+    f.write('')
 
-logical_formulator = LogicalFormulator(
-    logicalizer=vacatio.logical_formulate,
-    save=True
-)
+for i, deps in enumerate(dep_lists):
 
-lfs = logical_formulator.logicalize_all(relation_lists)
+    with open(RELATION_FILE, 'a', encoding='utf-8') as f:
 
-# print(lfs)
+        relations = vacatio.relationalize(deps)
+        f.write('-----------------------------------\n')
+        f.write(f'Relationalizing: {questions[i]}\n')
+        f.write('-----------------------------------\n')
+        f.write(f'{relations}\n\n')
 
-executor = ProcedureExecutor(vacatio.procedural_formulate, save=True)
-procedures = executor.proceduralize_all(lfs)
+    with open(LOGICAL_FILE, 'a', encoding='utf-8') as f:
+    
+        lf = vacatio.logicalize(relations)
+        proc = vacatio.proceduralize(lf)
+        f.write('-----------------------------------\n')
+        f.write(f'Logicalizing and Proceduralizing: {questions[i]}\n')
+        f.write('-----------------------------------\n')
+        f.write(f'{lf}\n')
+        f.write(f'{proc}\n\n')
 
-# print(procedures)
-
-print(executor.execute(procedures[5]))
+    with open(ANSWER_FILE, 'a', encoding='utf-8') as f:
+            
+        answer = vacatio.answer(proc, db)
+        f.write('-----------------------------------\n')
+        f.write(f'Answering: {questions[i]}\n')
+        f.write('-----------------------------------\n')
+        f.write(f'{answer}\n\n')

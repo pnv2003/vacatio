@@ -1,39 +1,30 @@
----1---
-(PLUR t1 tour)
-(ALL t1 tour)
-(THEME t1 tour)
-(COMMAND n1 nhắc)
-(VERB n1 nhắc)
+-----------------------------------
+Relationalizing: em có thể nhắc lại tất cả các tour được không?
+-----------------------------------
+[(PLUR t1 tour), (ALL t1 tour), (THEME t1 tour), (COMMAND n1 nhắc), (VERB n1 nhắc)]
 
----2---
-(HOW-LONG h1 )
-(VERB h2 hết)
-(FROM-LOC h3 Hồ_Chí_Minh)
-(TO-LOC n1 Nha_Trang)
+-----------------------------------
+Relationalizing: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
+-----------------------------------
+[(HOW-LONG h1 ), (VERB h2 hết), (FROM-LOC h3 Hồ_Chí_Minh), (TO-LOC n1 Nha_Trang)]
 
----3---
-(HOW-LONG h1 )
-(VERB h2 hết)
-(FROM-LOC h3 Hồ_Chí_Minh)
-(TO-LOC đ1 Đà_Nẵng)
+-----------------------------------
+Relationalizing: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
+-----------------------------------
+[(HOW-LONG h1 ), (VERB h2 hết), (FROM-LOC h3 Hồ_Chí_Minh), (TO-LOC đ1 Đà_Nẵng)]
 
----4---
-(HOW-MANY t1 tour)
-(THEME t1 tour)
-(VERB c1 có)
-(TO-LOC p1 Phú_Quốc)
+-----------------------------------
+Relationalizing: có bao nhiêu tour đi Phú Quốc vậy bạn?
+-----------------------------------
+[(HOW-MANY t1 tour), (THEME t1 tour), (VERB c1 có), (TO-LOC p1 Phú_Quốc)]
 
----5---
-(THE t1 tour)
-(THEME t1 tour)
-(WH p1 phương_tiện)
-(VERB đ1 đi)
-(TO-LOC n1 Nha_Trang)
+-----------------------------------
+Relationalizing: tour Nha Trang đi bằng phương tiện gì vậy?
+-----------------------------------
+[(THE t1 tour), (THEME t1 tour), (WH p1 phương_tiện), (VERB đ1 đi), (TO-LOC n1 Nha_Trang)]
 
----6---
-(PLUR n1 ngày)
-(THEME n1 ngày)
-(WH n1 ngày)
-(VERB c1 có)
-(TO-LOC n2 Nha_Trang)
+-----------------------------------
+Relationalizing: đi Nha Trang có những ngày nào nhỉ?
+-----------------------------------
+[(PLUR n1 ngày), (THEME n1 ngày), (WH n1 ngày), (VERB c1 có), (TO-LOC n2 Nha_Trang)]
 

@@ -208,7 +208,7 @@ def dependency_grammar() -> DependencyGrammar:
 
 # life is full of heuristics
 # this is one of them
-def extract_relations(dependencies: List[Dependency]):
+def relationalize(dependencies: List[Dependency]):
 
     # extract useful relations based on database in input/database.txt
     relations = []
@@ -288,7 +288,7 @@ def extract_relations(dependencies: List[Dependency]):
 
     return relations
 
-def logical_formulate(relations: List[Relation]) -> LogicalForm:
+def logicalize(relations: List[Relation]) -> LogicalForm:
     
     # speech act
     lf_spact = None
@@ -348,7 +348,7 @@ def logical_formulate(relations: List[Relation]) -> LogicalForm:
     lf_spact.add_argument(lf_verb)
     return lf_spact
 
-def procedural_formulate(logical_form: LogicalForm) -> Procedure:
+def proceduralize(logical_form: LogicalForm) -> Procedure:
     
     DATA = {
         'tour': 'TOUR',
@@ -467,6 +467,86 @@ def procedural_formulate(logical_form: LogicalForm) -> Procedure:
         proc.criteria = [tour, vehicle]
 
     return proc
+
+def answer(proc: Procedure, db: dict):
+
+    LANG = {
+        'PQ': 'Phú Quốc',
+        'NT': 'Nha Trang',
+        'DN': 'Đà Nẵng',
+        'HCM': 'Hồ Chí Minh',
+        'HCMC': 'Thành phố Hồ Chí Minh',
+        'airplane': 'máy bay',
+        'train': 'tàu hỏa',
+    }
+
+    def time2lang(time):
+        hour, date = time.split(' ')
+
+        return f"{hour[:-2]} giờ {'sáng' if hour[-2:] == 'AM' else 'chiều'} ngày {date}"
+    
+    def duration2lang(dur):
+
+        dur, unit = dur.split(' ')
+        hour, minute = dur.split(':')
+        
+        return f"{hour} giờ {minute} phút"
+    
+    res = proc.execute(db)
+
+    if proc.action == 'SELECT':
+
+        if not res:
+            return 'Không tìm thấy thông tin phù hợp.'
+        if proc.data == 'TOUR':
+            if proc.query == 1:
+                return f'Từ viết tắt của tour này là {res}.'
+            
+            elif proc.query == 2:
+                return f'Tên đầy đủ của tour này là {res}.'
+        elif proc.data == 'TIME':
+            if proc.query == (3,5):
+
+                tour = f'Tour {LANG[proc.criteria[0]]}' if proc.criteria[0] else 'Tour'
+                dloc = f' đi từ {LANG[proc.criteria[1]]} ' if proc.criteria[1] else ' '
+                aloc = f' đến {LANG[proc.criteria[3]]} ' if proc.criteria[3] else ' '
+
+                return f'{tour}{dloc}có lịch trình như sau:\n' + ''.join([
+                    f'{i + 1}. Từ {time2lang(d)} đến {time2lang(a)}.\n'
+                    for i, (d, a) in enumerate(res)
+                ])
+
+        elif proc.data =='RUN-TIME':
+
+            if proc.query == 4:
+                return f'Tour {LANG[proc.criteria[0]]} đi từ {LANG[proc.criteria[1]]} chạy trong khoảng thời gian {duration2lang(res[0])}.'
+            
+        elif proc.data == 'BY':
+
+            if proc.query == 2:
+                return (
+                    f'Tour {LANG[proc.criteria[0]]} đi bằng {LANG[res[0]]}.' if len(res) == 1
+                    else f'Tour {LANG[proc.criteria[0]]} có thể đi bằng các phương tiện sau: {", ".join([LANG[r] for r in res])}.'
+                )
+            
+    elif proc.action == 'FILTER':
+
+        if proc.data == 'TIME':
+
+            if not res:
+                return 'Không tìm thấy tour phù hợp.'
+            
+            ans = f'Có {len(res)} tour:\n' + ''.join([
+                f'{i + 1}. Tour {LANG[tour]} từ {LANG[dloc]} đến {LANG[aloc]} xuất phát vào lúc {time2lang(dtime)} và kết thúc vào lúc {time2lang(atime)}.\n'
+                for i, (tour, dloc, dtime, aloc, atime) in enumerate(res)
+            ])
+
+            return ans            
+
+
+                
+
+
             
         
 

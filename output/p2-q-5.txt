@@ -1,0 +1,43 @@
+-----------------------------------
+Answering: em có thể nhắc lại tất cả các tour được không?
+-----------------------------------
+Có 6 tour:
+1. Tour Phú Quốc từ Thành phố Hồ Chí Minh đến Phú Quốc xuất phát vào lúc 7 giờ sáng ngày 1/7 và kết thúc vào lúc 9 giờ sáng ngày 1/7.
+2. Tour Phú Quốc từ Thành phố Hồ Chí Minh đến Phú Quốc xuất phát vào lúc 8 giờ sáng ngày 5/7 và kết thúc vào lúc 10 giờ sáng ngày 5/7.
+3. Tour Đà Nẵng từ Thành phố Hồ Chí Minh đến Đà Nẵng xuất phát vào lúc 7 giờ sáng ngày 1/7 và kết thúc vào lúc 9 giờ sáng ngày 1/7.
+4. Tour Đà Nẵng từ Thành phố Hồ Chí Minh đến Đà Nẵng xuất phát vào lúc 7 giờ sáng ngày 4/7 và kết thúc vào lúc 9 giờ sáng ngày 4/7.
+5. Tour Nha Trang từ Thành phố Hồ Chí Minh đến Nha Trang xuất phát vào lúc 7 giờ sáng ngày 1/7 và kết thúc vào lúc 12 giờ sáng ngày 1/7.
+6. Tour Nha Trang từ Thành phố Hồ Chí Minh đến Nha Trang xuất phát vào lúc 7 giờ sáng ngày 5/7 và kết thúc vào lúc 12 giờ sáng ngày 5/7.
+
+
+-----------------------------------
+Answering: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
+-----------------------------------
+Tour Nha Trang đi từ Hồ Chí Minh chạy trong khoảng thời gian 5 giờ 00 phút.
+
+-----------------------------------
+Answering: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
+-----------------------------------
+Tour Đà Nẵng đi từ Hồ Chí Minh chạy trong khoảng thời gian 2 giờ 00 phút.
+
+-----------------------------------
+Answering: có bao nhiêu tour đi Phú Quốc vậy bạn?
+-----------------------------------
+Có 2 tour:
+1. Tour Phú Quốc từ Thành phố Hồ Chí Minh đến Phú Quốc xuất phát vào lúc 7 giờ sáng ngày 1/7 và kết thúc vào lúc 9 giờ sáng ngày 1/7.
+2. Tour Phú Quốc từ Thành phố Hồ Chí Minh đến Phú Quốc xuất phát vào lúc 8 giờ sáng ngày 5/7 và kết thúc vào lúc 10 giờ sáng ngày 5/7.
+
+
+-----------------------------------
+Answering: tour Nha Trang đi bằng phương tiện gì vậy?
+-----------------------------------
+Tour Nha Trang đi bằng tàu hỏa.
+
+-----------------------------------
+Answering: đi Nha Trang có những ngày nào nhỉ?
+-----------------------------------
+Tour Nha Trang có lịch trình như sau:
+1. Từ 7 giờ sáng ngày 1/7 đến 12 giờ sáng ngày 1/7.
+2. Từ 7 giờ sáng ngày 5/7 đến 12 giờ sáng ngày 5/7.
+
+
