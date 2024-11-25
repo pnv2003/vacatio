@@ -26,9 +26,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends locales git wge
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \    
     locale-gen
-
-# RUN mkdir -p src
-# RUN wget -P /src/vi-dp-v1a1.zip https://github.com/undertheseanlp/underthesea/releases/download/resources/vi-dp-v1a1.zip
     
 ENV LANG en_US.UTF-8    
 ENV LANGUAGE en_US:en
@@ -80,9 +77,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install locales && \
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen
-
-# RUN mkdir -p /root/.cache/torch/hub/checkpoints
-# COPY /src/vi-dp-v1a1.zip /root/.cache/torch/hub/checkpoints/vi-dp-v1a1.zip
 	
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
