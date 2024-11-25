@@ -2,35 +2,35 @@
 Logicalizing and Proceduralizing: em có thể nhắc lại tất cả các tour được không?
 -----------------------------------
 (COMMAND (nhắc [THEME <ALL t1 tour>]))
-FILTER TIME BY [None, None, None, None, None]
+FILTER (DTIME * * *) (ATIME * * *)
 
 -----------------------------------
 Logicalizing and Proceduralizing: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
 -----------------------------------
 (WH-QUERY (hết [THEME <HOW-MUCH h1 TIME>] [FROM-LOC (NAME h3 Hồ_Chí_Minh)] [TO-LOC (NAME n1 Nha_Trang)]))
-SELECT 4 FROM RUN-TIME WHERE ['NT', 'HCM', None, None]
+SELECT ?x (RUN-TIME NT HCM * ?x)
 
 -----------------------------------
 Logicalizing and Proceduralizing: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
 -----------------------------------
 (WH-QUERY (hết [THEME <HOW-MUCH h1 TIME>] [FROM-LOC (NAME h3 Hồ_Chí_Minh)] [TO-LOC (NAME đ1 Đà_Nẵng)]))
-SELECT 4 FROM RUN-TIME WHERE ['DN', 'HCM', None, None]
+SELECT ?x (RUN-TIME DN HCM * ?x)
 
 -----------------------------------
 Logicalizing and Proceduralizing: có bao nhiêu tour đi Phú Quốc vậy bạn?
 -----------------------------------
 (WH-QUERY (có [THEME <HOW-MANY t1 tour>] [TO-LOC (NAME p1 Phú_Quốc)]))
-FILTER TIME BY ['PQ', None, None, 'PQ', None]
+FILTER (DTIME PQ * *) (ATIME PQ PQ *)
 
 -----------------------------------
 Logicalizing and Proceduralizing: tour Nha Trang đi bằng phương tiện gì vậy?
 -----------------------------------
 (WH-QUERY (đi [THEME <THE t1 tour>] [INSTR <WH p1 phương_tiện>] [TO-LOC (NAME n1 Nha_Trang)]))
-SELECT 2 FROM BY WHERE ['NT', None]
+SELECT ?x (BY NT ?x)
 
 -----------------------------------
 Logicalizing and Proceduralizing: đi Nha Trang có những ngày nào nhỉ?
 -----------------------------------
 (WH-QUERY (có [THEME <WH n1 ngày>] [TO-LOC (NAME n2 Nha_Trang)]))
-SELECT (3, 5) FROM TIME WHERE ['NT', None, None, 'NT', None]
+SELECT ?x ?y (DTIME NT * ?x) (ATIME NT NT ?y)
 

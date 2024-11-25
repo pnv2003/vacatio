@@ -41,7 +41,47 @@ class SelectProcedure(Procedure):
         return result
 
     def __repr__(self):
-        return f"SELECT {self.query} FROM {self.data} WHERE {self.criteria}"
+        
+        var = {}
+        q = None
+        if type(self.query) is int:
+            var[self.query] = '?x'
+            q = '?x'
+        elif type(self.query) in [list, tuple]:
+            var[self.query[0]] = '?x'
+            var[self.query[1]] = '?y'
+            q = '?x ?y'
+        #TODO: add more cases for query length
+
+        pattern = None
+        pattern = self.criteria.copy()
+        for i, v in var.items():
+            pattern[i - 1] = v
+        c = None
+        if self.data == 'TIME':
+            # special case: (DTIME * * *) (ATIME * * *)
+
+            c = (
+                '(DTIME' + 
+                ' ' + (pattern[0] if pattern[0] else '*') +
+                ' ' + (pattern[1] if pattern[1] else '*') +
+                ' ' + (pattern[2] if pattern[2] else '*') +
+                ') (ATIME' +
+                ' ' + (pattern[0] if pattern[0] else '*') +
+                ' ' + (pattern[3] if pattern[3] else '*') +
+                ' ' + (pattern[4] if pattern[4] else '*') +
+                ')'
+            )
+
+        else:
+            c = (
+                f'({self.data} ' +
+                ' '.join(
+                    [str(x) if x else '*' for x in pattern]
+                ) + ')'
+            )
+
+        return f'SELECT {q} {c}'        
     
 class FilterProcedure(Procedure):
 
@@ -66,4 +106,30 @@ class FilterProcedure(Procedure):
         return result
 
     def __repr__(self):
-        return f"FILTER {self.data} BY {self.criteria}"
+        
+        c = None
+
+        if self.data == 'TIME':
+
+            c = (
+                '(DTIME' + 
+                ' ' + (self.criteria[0] if self.criteria[0] else '*') +
+                ' ' + (self.criteria[1] if self.criteria[1] else '*') +
+                ' ' + (self.criteria[2] if self.criteria[2] else '*') +
+                ') (ATIME' +
+                ' ' + (self.criteria[0] if self.criteria[0] else '*') +
+                ' ' + (self.criteria[3] if self.criteria[3] else '*') +
+                ' ' + (self.criteria[4] if self.criteria[4] else '*') +
+                ')'
+            )
+
+        else:
+
+            c = (
+                f'({self.data} ' +
+                ' '.join(
+                    [str(x) if x else '*' for x in self.criteria]
+                ) + ')'
+            )
+
+        return f'FILTER {c}'
