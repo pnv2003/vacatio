@@ -8,7 +8,7 @@ class LogicalForm:
         self.args.append(arg)
 
     def __repr__(self):
-        return f"({self.predicate} {' '.join(map(str, self.args))})"
+        return f"({self.predicate} {self.var + ' ' if self.var else ''}{' '.join(map(str, self.args))})"
 
 class ThematicRole:
     def __init__(self, role, entity, var=None):

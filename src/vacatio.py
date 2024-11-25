@@ -256,7 +256,7 @@ def relationalize(dependencies: List[Dependency]):
                     relations.append(Relation('THEME', dep.tail.word))
 
             elif dep.tail.word == 'bao_lâu':
-                relations.append(Relation('HOW-LONG'))
+                relations.append(Relation('HOW-MUCH', 'TIME'))
             else:
                 relations.append(Relation('THEME', dep.tail.word))
 
@@ -278,13 +278,9 @@ def relationalize(dependencies: List[Dependency]):
         relations.append(Relation('TO-LOC', to_loc))
 
     for rel in relations:
-        if rel.args:
-            entity = rel.args[0]
-            key = varm.set(entity, entity)
-            rel.make_variable(key)
-        else:
-            key = varm.set(rel.pred, rel.pred)
-            rel.make_variable(key)
+        entity = rel.args[0]
+        key = varm.set(entity, entity)
+        rel.make_variable(key)
 
     return relations
 
@@ -300,7 +296,7 @@ def logicalize(relations: List[Relation]) -> LogicalForm:
 
         if rel.pred == 'COMMAND':
             lf_spact = LogicalForm('COMMAND')
-        if rel.pred in ['HOW-MANY', 'HOW-LONG', 'WH']:
+        if rel.pred in ['HOW-MANY', 'HOW-MUCH', 'WH']:
             lf_spact = LogicalForm('WH-QUERY')
 
             if rel.pred in ['HOW-MANY', 'WH']:
@@ -309,10 +305,10 @@ def logicalize(relations: List[Relation]) -> LogicalForm:
                     Entity(rel.pred, rel.var, rel.args[0])
                 ))
 
-            elif rel.pred == 'HOW-LONG':
+            elif rel.pred == 'HOW-MUCH' and rel.args[0] == 'TIME':
                 thematic_roles.append(ThematicRole(
                     'THEME',
-                    Entity('HOW-MUCH', rel.var, 'TIME'),
+                    Entity('HOW-MUCH', rel.var, rel.args[0]),
                 ))
 
         if rel.pred == 'VERB':

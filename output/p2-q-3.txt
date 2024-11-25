@@ -6,12 +6,12 @@ Relationalizing: em có thể nhắc lại tất cả các tour được không?
 -----------------------------------
 Relationalizing: đi từ Hồ Chí Minh tới Nha Trang hết bao lâu?
 -----------------------------------
-[(HOW-LONG h1 ), (VERB h2 hết), (FROM-LOC h3 Hồ_Chí_Minh), (TO-LOC n1 Nha_Trang)]
+[(HOW-MUCH t1 TIME), (VERB h1 hết), (FROM-LOC h2 Hồ_Chí_Minh), (TO-LOC n1 Nha_Trang)]
 
 -----------------------------------
 Relationalizing: đi từ Hồ Chí Minh tới Đà Nẵng hết bao lâu?
 -----------------------------------
-[(HOW-LONG h1 ), (VERB h2 hết), (FROM-LOC h3 Hồ_Chí_Minh), (TO-LOC đ1 Đà_Nẵng)]
+[(HOW-MUCH t1 TIME), (VERB h1 hết), (FROM-LOC h2 Hồ_Chí_Minh), (TO-LOC đ1 Đà_Nẵng)]
 
 -----------------------------------
 Relationalizing: có bao nhiêu tour đi Phú Quốc vậy bạn?
