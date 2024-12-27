@@ -18,7 +18,7 @@ docker build -t student-image .
 docker run --rm -v /`pwd`/2112070/output:/nlp/output student-image
 ```
 
-# Part 1: Context-Free Grammar and Parser
+## Part 1: Context-Free Grammar and Parser
 
 This repo contain source code for running the part 1 of the assignment.
 
@@ -28,7 +28,7 @@ The output will be generated at `2112070/output`. This will contain 3 files:
 - `parse-results.txt`: results of parsing the sentences in `python/input/sentences.txt` using the grammar
 - `samples.txt`: some example sentences generated from the grammar
 
-# Part 2: Semantics Representation and Question Answering
+## Part 2: Semantics Representation and Question Answering
 
 This repo contain source code for running the part 2 of the assignment.
 
